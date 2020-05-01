@@ -17,7 +17,7 @@ class QueueHandler:
         self.sockjs_sender = SockJsSender(app, shared_data=shared_data)
 
     async def handle(self, encoded_message, properties):
-        logger.debug(f"queue message recieve: {encoded_message}")
+        logger.debug(f"queue message receive: {encoded_message}")
         message = json.loads(encoded_message.decode())
         await self.sockjs_sender.publish(message)
 
@@ -36,7 +36,7 @@ class SockJsHandler:
             return "notification_queue"
 
     async def handle(self, sockjs_message, session):
-        logger.debug(f"sockjs message recieve: {sockjs_message}")
+        logger.debug(f"sockjs message receive: {sockjs_message}")
         if sockjs_message.type == sockjs.MSG_OPEN:
             user_pk = session.request.match_info.get("pk")
             self.shared_data["users"][user_pk] = session.id
